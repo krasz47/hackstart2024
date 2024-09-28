@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List with Completion</title>
+    <title>To-Do List with Completion and Remove Button</title>
     <style>
         * {
             margin: 0;
@@ -20,6 +20,13 @@
             height: 100vh;
         }
 
+        .todo-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
 
         h1 {
             text-align: center;
@@ -59,8 +66,7 @@
             border-radius: 4px;
             margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
         }
 
         /* Completed tasks style */
@@ -69,17 +75,22 @@
             color: grey;
         }
 
+        .task-text {
+            margin-bottom: 10px;
+        }
+
         .remove-btn {
-            background-color: #b4adf3;
+            background-color: #dc3545;
             color: white;
             border: none;
             border-radius: 4px;
             padding: 5px 10px;
             cursor: pointer;
+            align-self: flex-start;
         }
 
         .remove-btn:hover {
-            background-color: #8493d6;
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -111,8 +122,19 @@
             // Create list item
             const li = document.createElement('li');
 
-            // Create task text and button
-            li.innerHTML = `<span>${taskText}</span> <button class="remove-btn">Remove</button>`;
+            // Create a container for the task text and remove button
+            const taskTextElement = document.createElement('span');
+            taskTextElement.textContent = taskText;
+            taskTextElement.classList.add('task-text');
+
+            // Create remove button
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-btn');
+
+            // Append task text and button to list item
+            li.appendChild(taskTextElement);
+            li.appendChild(removeButton);
 
             // Append to list
             todoList.appendChild(li);
@@ -121,12 +143,12 @@
             input.value = '';
 
             // Event: Mark as completed by clicking on the task text
-            li.querySelector('span').addEventListener('click', function () {
+            taskTextElement.addEventListener('click', function () {
                 this.classList.toggle('completed');
             });
 
             // Event: Remove task
-            li.querySelector('.remove-btn').addEventListener('click', function() {
+            removeButton.addEventListener('click', function() {
                 todoList.removeChild(li);
             });
         }
@@ -140,13 +162,13 @@
         });
 
         // Automatically add some sample tasks for testing purposes
-        window.onload = function() {
-            const sampleTasks = ['Finish homework', 'Buy groceries', 'Read a book'];
-            sampleTasks.forEach(task => {
-                input.value = task;
-                addTask();
-            });
-        }
+        //window.onload = function() {
+        //    const sampleTasks = ['Finish homework', 'Buy groceries', 'Read a book'];
+        //    sampleTasks.forEach(task => {
+        //        input.value = task;
+        //        addTask();
+        //    });
+        //}
     </script>
 
 </body>
